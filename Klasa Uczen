@@ -1,0 +1,229 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+ 
+struct Przedmiot
+{
+  
+string nazwa_przedmiotu;
+  
+unsigned int ocena;
+ 
+};
+
+ 
+class Uczen
+{
+
+private:
+string imie;
+  
+string nazwisko;
+
+public:
+Przedmiot przedmioty[10];
+  
+int ilosc_przedmiotow;
+
+Uczen (string i, string n) 
+:imie (i), nazwisko (n), ilosc_przedmiotow (0)
+  {
+  } 
+ 
+void zapisz_imie (string i)
+  {
+    imie = i;
+  } 
+void zapisz_nazwisko (string n)
+  {
+    nazwisko = n;
+  } 
+string odczytaj_imie ()
+  {
+    return imie;
+  }
+   
+string odczytaj_nazwisko ()
+  {
+    return nazwisko;
+  }
+   
+
+void dodaj_przedmiot (string nazwa, unsigned int ocena)
+  {
+    
+if (ilosc_przedmiotow >= 10)
+      {
+	
+cout << "Nie mozna dodac wiecej przedmiotow." << endl;
+	
+return;
+      
+}
+    
+przedmioty[ilosc_przedmiotow].nazwa_przedmiotu = nazwa;
+    
+przedmioty[ilosc_przedmiotow].ocena = ocena;
+    
+ilosc_przedmiotow++;
+  
+}
+  
+ 
+ 
+ 
+void wypisz_przedmioty ()
+  {
+    
+for (int i = 0; i < ilosc_przedmiotow; i++)
+      {
+	
+cout << przedmioty[i].nazwa_przedmiotu << ": " << przedmioty[i].
+	  ocena << endl;
+
+} 
+} 
+};
+
+ 
+class UczenTechnikum:public Uczen
+{
+
+private:
+struct PrzedmiotTechnikum:public Przedmiot
+  {
+    
+bool czyZawodowe;
+  
+};
+
+ 
+public: 
+UczenTechnikum (string i, string n) 
+:Uczen (i, n)
+  {
+  } 
+ 
+void dodaj_przedmiot (string nazwa,  int ocena,
+			     bool czyZawodowy)
+  {
+    
+if (ilosc_przedmiotow >= 10)
+      {
+	
+cout << "Nie mozna dodac wiecej przedmiotow." << endl;
+	
+return;
+      
+}
+    
+PrzedmiotTechnikum pt;
+    
+pt.nazwa_przedmiotu = nazwa;
+    
+pt.ocena = ocena;
+    
+pt.czyZawodowe = czyZawodowy;
+    
+przedmioty[ilosc_przedmiotow] = pt;
+    
+ilosc_przedmiotow++;
+  
+}
+
+};
+
+
+ 
+int
+main ()
+{
+  
+string imie, nazwisko;
+  
+cout << "Podaj imie ucznia: ";
+  
+getline (cin, imie);
+  
+if (imie.empty ())
+    {
+      
+imie = "Igor";
+    
+}
+  
+cout << "Podaj nazwisko ucznia: ";
+  
+getline (cin, nazwisko);
+  
+if (nazwisko.empty ())
+    {
+      
+nazwisko = "Binkowski";
+    
+}
+  
+ 
+Uczen uczen (imie, nazwisko);
+  
+uczen.dodaj_przedmiot ("Matematyka", 4);
+  
+uczen.dodaj_przedmiot ("Fizyka", 5);
+  
+uczen.dodaj_przedmiot ("Chemia", 3);
+  
+ 
+cout << "Uczen: " << uczen.odczytaj_imie () << " " << uczen.
+    odczytaj_nazwisko () << endl;
+  
+cout << "Przedmioty: " << endl;
+  
+uczen.wypisz_przedmioty ();
+  
+ 
+cout << endl;
+  
+  cout << "Podaj imie ucznia Technikum: ";
+  
+getline (cin, imie);
+  
+if (imie.empty ())
+    {
+      
+imie = "Igor";
+    
+}
+  
+cout << "Podaj nazwisko ucznia Technikum: ";
+  
+getline (cin, nazwisko);
+  
+if (nazwisko.empty ())
+    {
+      
+nazwisko = "Binkowski";
+    
+}
+cout << endl;
+ 
+UczenTechnikum uczenTechnikum (imie, nazwisko);
+  
+uczenTechnikum.dodaj_przedmiot ("Matematyka", 5, true);
+  
+uczenTechnikum.dodaj_przedmiot ("Informatyka", 4, true);
+  
+uczenTechnikum.dodaj_przedmiot ("Jezyk angielski", 5, false);
+  
+ 
+cout << "Uczen Technikum: " << uczenTechnikum.
+    odczytaj_imie () << " " << uczenTechnikum.odczytaj_nazwisko () << endl;
+  
+cout << "Przedmioty Technikum: " << endl;
+  
+uczenTechnikum.wypisz_przedmioty ();
+  
+ 
+return 0;
+
+}
